@@ -7,33 +7,24 @@ from utils.general import (yaml_load, yaml_save, print_args, LOGGER, colorstr,
 
 # YOLO 모델 정의를 불러오기
 from models.yolo import Model  
-
 # 모델 로딩을 위한 실험적 모듈 불러오기
 from models.experimental import attempt_load  
-
 # 성능 평가를 위한 메트릭 함수 불러오기
 from utils.metrics import fitness  
-
 # 분산 학습과 관련된 유틸리티 함수들 불러오기
 from utils.torch_utils import (select_device, de_parallel, is_main_process, EarlyStopping, 
                                 torch_distributed_zero_first, smart_optimizer, ModelEMA, 
                                 smart_resume, smart_DDP)  
-
 # Anchor 관련 체크 함수 불러오기
 from utils.autoanchor import check_anchors  
-
 # 학습 손실 계산을 위한 함수
 from utils.loss import ComputeLoss  
-
 # 콜백 함수 관리 모듈
 from utils.callbacks import Callbacks  
-
 # 객체 깊은 복사를 위해 copy 모듈 사용
 from copy import deepcopy  
-
 # 날짜 및 시간을 다루기 위한 모듈
 from datetime import datetime  
-
 # Validation 함수 호출 시 별칭 설정 (mAP 계산)
 import val as validate  # for end-of-epoch mAP
 from pathlib import Path  # 파일 경로를 처리하기 위한 Path 클래스
@@ -56,8 +47,8 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 # 분산 학습 관련 환경 변수 설정
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # 로컬 랭크 (기본값 -1)
-RANK = int(os.getenv('RANK', -1))  # 전체 프로세
-
+RANK = int(os.getenv('RANK', -1))  # 전체 프로세스의 랭크 (기본값 -1)
+WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))  # 전체 프로세스 수 (기본값 1)
 
 ##############################################
 def train(hyp, opt, device, callbacks):
